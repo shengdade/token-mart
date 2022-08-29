@@ -130,7 +130,7 @@ contract GameItems is ERC1155Supply, Ownable {
             "GameItems: insufficient payment for purchase"
         );
 
-        safeTransferFrom(owner(), _msgSender(), id, amount, "");
+        _safeTransferFrom(owner(), _msgSender(), id, amount, "");
     }
 
     /**
@@ -167,7 +167,7 @@ contract GameItems is ERC1155Supply, Ownable {
             "GameItems: insufficient payment for batch purchase"
         );
 
-        safeBatchTransferFrom(owner(), _msgSender(), ids, amounts, "");
+        _safeBatchTransferFrom(owner(), _msgSender(), ids, amounts, "");
     }
 
     /**
