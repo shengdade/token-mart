@@ -4,10 +4,30 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
 contract GameItems is ERC1155Supply, Ownable {
     // Mapping from token ID to token prices
     mapping(uint256 => uint256) private _prices;
+
+    // Emitted when buyer purchased amount of token with given id
+    event PurchaseSingle(
+        address indexed buyer,
+        uint256 id,
+        uint256 amount,
+        uint256 value
+    );
+
+    // Emitted when buyer purchased amounts of tokens with given ids
+    event PurchaseBatch(
+        address indexed buyer,
+        uint256[] ids,
+        uint256[] amounts,
+        uint256 value
+    );
+
+    // Emitted when owner withdrawn amount of balance
+    event Withdrawal(uint amount);
 
     uint256 public constant GOLD = 0;
     uint256 public constant SILVER = 1;
@@ -131,6 +151,7 @@ contract GameItems is ERC1155Supply, Ownable {
         );
 
         _safeTransferFrom(owner(), _msgSender(), id, amount, "");
+        emit PurchaseSingle(_msgSender(), id, amount, msg.value);
     }
 
     /**
@@ -168,6 +189,18 @@ contract GameItems is ERC1155Supply, Ownable {
         );
 
         _safeBatchTransferFrom(owner(), _msgSender(), ids, amounts, "");
+        emit PurchaseBatch(_msgSender(), ids, amounts, msg.value);
+    }
+
+    /**
+     * Withdraw amount of balance to the owner
+     *
+     * Requirements:
+     * - only owner can call this function.
+     */
+    function withdraw(uint256 amount) public onlyOwner {
+        Address.sendValue(payable(owner()), amount);
+        emit Withdrawal(amount);
     }
 
     /**
