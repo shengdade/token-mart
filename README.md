@@ -45,3 +45,9 @@ IPFS images
 - CID: bafybeiclwildrgedknmcldkiy27gxcg4g63n4kgkyqujqjifxdbwa22n2a
 - IPFS URL: ipfs://bafybeiclwildrgedknmcldkiy27gxcg4g63n4kgkyqujqjifxdbwa22n2a
 - Gateway URL: https://nftstorage.link/ipfs/bafybeiclwildrgedknmcldkiy27gxcg4g63n4kgkyqujqjifxdbwa22n2a
+
+IPFS metadata
+
+- CID: bafybeiai4s3lls5nyjzj5dr7y66nodvnwq2jogsvp3vbbzqbkhi7mtvfrm
+- IPFS URL: ipfs://bafybeiai4s3lls5nyjzj5dr7y66nodvnwq2jogsvp3vbbzqbkhi7mtvfrm
+- Gateway URL: https://nftstorage.link/ipfs/bafybeiai4s3lls5nyjzj5dr7y66nodvnwq2jogsvp3vbbzqbkhi7mtvfrm
