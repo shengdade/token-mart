@@ -16,40 +16,40 @@ describe('GameItems', function () {
     it('Should set the right balance', async function () {
       const { gameItems, owner } = await loadFixture(deployFixture)
 
-      expect(await gameItems.balanceOf(owner.address, '0')).to.equal(18)
-      expect(await gameItems.balanceOf(owner.address, '1')).to.equal(27)
-      expect(await gameItems.balanceOf(owner.address, '2')).to.equal(1)
-      expect(await gameItems.balanceOf(owner.address, '3')).to.equal(2)
-      expect(await gameItems.balanceOf(owner.address, '4')).to.equal(9)
+      expect(await gameItems.balanceOf(owner.address, '1')).to.equal(5)
+      expect(await gameItems.balanceOf(owner.address, '2')).to.equal(10)
+      expect(await gameItems.balanceOf(owner.address, '3')).to.equal(3)
+      expect(await gameItems.balanceOf(owner.address, '4')).to.equal(3)
+      expect(await gameItems.balanceOf(owner.address, '5')).to.equal(1)
     })
 
     it('Should set the right supply', async function () {
       const { gameItems } = await loadFixture(deployFixture)
 
-      expect(await gameItems.totalSupply('0')).to.equal(18)
-      expect(await gameItems.totalSupply('1')).to.equal(27)
-      expect(await gameItems.totalSupply('2')).to.equal(1)
-      expect(await gameItems.totalSupply('3')).to.equal(2)
-      expect(await gameItems.totalSupply('4')).to.equal(9)
+      expect(await gameItems.totalSupply('1')).to.equal(5)
+      expect(await gameItems.totalSupply('2')).to.equal(10)
+      expect(await gameItems.totalSupply('3')).to.equal(3)
+      expect(await gameItems.totalSupply('4')).to.equal(3)
+      expect(await gameItems.totalSupply('5')).to.equal(1)
     })
 
     it('Should set the right price', async function () {
       const { gameItems } = await loadFixture(deployFixture)
 
-      expect(await gameItems.priceOf('0')).to.equal(
-        ethers.utils.parseEther('0.1')
-      )
       expect(await gameItems.priceOf('1')).to.equal(
         ethers.utils.parseEther('0.01')
       )
       expect(await gameItems.priceOf('2')).to.equal(
-        ethers.utils.parseEther('0.2')
+        ethers.utils.parseEther('0.005')
       )
       expect(await gameItems.priceOf('3')).to.equal(
-        ethers.utils.parseEther('0.01')
+        ethers.utils.parseEther('0.008')
       )
       expect(await gameItems.priceOf('4')).to.equal(
-        ethers.utils.parseEther('0.01')
+        ethers.utils.parseEther('0.008')
+      )
+      expect(await gameItems.priceOf('5')).to.equal(
+        ethers.utils.parseEther('0.02')
       )
     })
 
@@ -92,18 +92,18 @@ describe('GameItems', function () {
       it('Should return batch of prices', async function () {
         const { gameItems } = await loadFixture(deployFixture)
 
-        expect(await gameItems.priceOfBatch(['0', '1', '2'])).to.deep.equal([
-          ethers.utils.parseEther('0.1'),
+        expect(await gameItems.priceOfBatch(['1', '2', '3'])).to.deep.equal([
           ethers.utils.parseEther('0.01'),
-          ethers.utils.parseEther('0.2'),
+          ethers.utils.parseEther('0.005'),
+          ethers.utils.parseEther('0.008'),
         ])
       })
 
       it('Should set the right price', async function () {
         const { gameItems } = await loadFixture(deployFixture)
 
-        await gameItems.setPrice('0', ethers.utils.parseEther('1'))
-        expect(await gameItems.priceOf('0')).to.equal(
+        await gameItems.setPrice('1', ethers.utils.parseEther('1'))
+        expect(await gameItems.priceOf('1')).to.equal(
           ethers.utils.parseEther('1')
         )
       })
@@ -134,7 +134,7 @@ describe('GameItems', function () {
         await expect(
           gameItems
             .connect(otherAccount)
-            .purchase('0', 100, { value: ethers.utils.parseEther('10') })
+            .purchase('1', 100, { value: ethers.utils.parseEther('10') })
         ).to.be.revertedWith(
           'GameItems: insufficient items available to purchase'
         )
@@ -144,8 +144,8 @@ describe('GameItems', function () {
         const { gameItems, otherAccount } = await loadFixture(deployFixture)
 
         await expect(
-          gameItems.connect(otherAccount).purchase('0', 100, {
-            value: ethers.utils.parseEther('0.09'),
+          gameItems.connect(otherAccount).purchase('1', 100, {
+            value: ethers.utils.parseEther('0.9'),
           })
         ).to.be.revertedWith(
           'GameItems: insufficient items available to purchase'
@@ -158,19 +158,19 @@ describe('GameItems', function () {
         )
 
         expect(
-          await gameItems.connect(otherAccount).purchase('0', 8, {
-            value: ethers.utils.parseEther('0.9'),
+          await gameItems.connect(otherAccount).purchase('1', 2, {
+            value: ethers.utils.parseEther('0.02'),
           })
         ).to.changeEtherBalances(
           [gameItems, otherAccount],
-          [ethers.utils.parseEther('0.9'), -ethers.utils.parseEther('0.9')]
+          [ethers.utils.parseEther('0.02'), -ethers.utils.parseEther('0.02')]
         )
         expect(await ethers.provider.getBalance(gameItems.address)).to.equal(
-          ethers.utils.parseEther('0.9')
+          ethers.utils.parseEther('0.02')
         )
-        expect(await gameItems.balanceOf(owner.address, '0')).to.equal(10)
-        expect(await gameItems.balanceOf(otherAccount.address, '0')).to.equal(8)
-        expect(await gameItems.totalSupply('0')).to.equal(18)
+        expect(await gameItems.balanceOf(owner.address, '1')).to.equal(3)
+        expect(await gameItems.balanceOf(otherAccount.address, '1')).to.equal(2)
+        expect(await gameItems.totalSupply('1')).to.equal(5)
       })
     })
 
@@ -179,7 +179,7 @@ describe('GameItems', function () {
         const { gameItems, otherAccount } = await loadFixture(deployFixture)
 
         await expect(
-          gameItems.connect(otherAccount).purchaseBatch(['0', '1'], [1], {
+          gameItems.connect(otherAccount).purchaseBatch(['1', '2'], [1], {
             value: ethers.utils.parseEther('10'),
           })
         ).to.be.revertedWith('GameItems: ids and amounts length mismatch')
@@ -189,7 +189,7 @@ describe('GameItems', function () {
         const { gameItems, otherAccount } = await loadFixture(deployFixture)
 
         await expect(
-          gameItems.connect(otherAccount).purchaseBatch(['0', '1'], [1, 100], {
+          gameItems.connect(otherAccount).purchaseBatch(['1', '2'], [1, 100], {
             value: ethers.utils.parseEther('100'),
           })
         ).to.be.revertedWith(
@@ -201,8 +201,8 @@ describe('GameItems', function () {
         const { gameItems, otherAccount } = await loadFixture(deployFixture)
 
         await expect(
-          gameItems.connect(otherAccount).purchaseBatch(['0', '1'], [1, 1], {
-            value: ethers.utils.parseEther('0.1'),
+          gameItems.connect(otherAccount).purchaseBatch(['1', '2'], [1, 2], {
+            value: ethers.utils.parseEther('0.019'),
           })
         ).to.be.revertedWith(
           'GameItems: insufficient payment for batch purchase'
@@ -217,15 +217,15 @@ describe('GameItems', function () {
         expect(
           await gameItems
             .connect(otherAccount)
-            .purchaseBatch(['0', '1', '2'], [18, 20, 1], {
-              value: ethers.utils.parseEther('2.2'),
+            .purchaseBatch(['1', '2', '3'], [1, 4, 2], {
+              value: ethers.utils.parseEther('0.046'),
             })
         ).to.changeEtherBalances(
           [gameItems, otherAccount],
-          [ethers.utils.parseEther('2.2'), -ethers.utils.parseEther('2.2')]
+          [ethers.utils.parseEther('0.046'), -ethers.utils.parseEther('0.046')]
         )
         expect(await ethers.provider.getBalance(gameItems.address)).to.equal(
-          ethers.utils.parseEther('2.2')
+          ethers.utils.parseEther('0.046')
         )
         expect(
           await gameItems.balanceOfBatch(
@@ -237,12 +237,12 @@ describe('GameItems', function () {
               otherAccount.address,
               otherAccount.address,
             ],
-            ['0', '1', '2', '0', '1', '2']
+            ['1', '2', '3', '1', '2', '3']
           )
-        ).to.deep.equal([0, 7, 0, 18, 20, 1])
-        expect(await gameItems.totalSupply('0')).to.equal(18)
-        expect(await gameItems.totalSupply('1')).to.equal(27)
-        expect(await gameItems.totalSupply('2')).to.equal(1)
+        ).to.deep.equal([4, 6, 1, 1, 4, 2])
+        expect(await gameItems.totalSupply('1')).to.equal(5)
+        expect(await gameItems.totalSupply('2')).to.equal(10)
+        expect(await gameItems.totalSupply('3')).to.equal(3)
       })
     })
   })
@@ -259,26 +259,26 @@ describe('GameItems', function () {
     it('Should revert with the right error if insufficient balance', async function () {
       const { gameItems, otherAccount } = await loadFixture(deployFixture)
 
-      await gameItems.connect(otherAccount).purchase('0', 2, {
-        value: ethers.utils.parseEther('0.2'),
+      await gameItems.connect(otherAccount).purchase('1', 2, {
+        value: ethers.utils.parseEther('0.02'),
       })
       await expect(
-        gameItems.withdraw(ethers.utils.parseEther('0.21'))
+        gameItems.withdraw(ethers.utils.parseEther('0.021'))
       ).to.be.revertedWith('Address: insufficient balance')
     })
 
     it('Should transfer the funds to the owner', async function () {
       const { gameItems, otherAccount } = await loadFixture(deployFixture)
 
-      await gameItems.connect(otherAccount).purchase('0', 2, {
-        value: ethers.utils.parseEther('0.2'),
+      await gameItems.connect(otherAccount).purchase('1', 2, {
+        value: ethers.utils.parseEther('0.02'),
       })
 
       expect(
-        gameItems.withdraw(ethers.utils.parseEther('0.2'))
+        gameItems.withdraw(ethers.utils.parseEther('0.02'))
       ).to.changeEtherBalances(
         [gameItems, otherAccount],
-        [-ethers.utils.parseEther('0.2'), ethers.utils.parseEther('0.2')]
+        [-ethers.utils.parseEther('0.02'), ethers.utils.parseEther('0.02')]
       )
       expect(await ethers.provider.getBalance(gameItems.address)).to.equal(0)
     })
@@ -301,16 +301,16 @@ describe('GameItems', function () {
       const { gameItems, otherAccount } = await loadFixture(deployFixture)
 
       await expect(
-        gameItems.connect(otherAccount).purchaseBatch(['0', '1'], [1, 2], {
-          value: ethers.utils.parseEther('1'),
+        gameItems.connect(otherAccount).purchaseBatch(['1', '2'], [1, 2], {
+          value: ethers.utils.parseEther('0.02'),
         })
       )
         .to.emit(gameItems, 'PurchaseBatch')
         .withArgs(
           otherAccount.address,
-          ['0', '1'],
+          ['1', '2'],
           [1, 2],
-          ethers.utils.parseEther('1')
+          ethers.utils.parseEther('0.02')
         )
     })
 
