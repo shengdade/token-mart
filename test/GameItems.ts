@@ -66,7 +66,7 @@ describe('GameItems', function () {
         const { gameItems } = await loadFixture(deployFixture)
 
         expect(await gameItems.uri('0')).to.equal(
-          'https://ipfs.io/ipfs/bafybeihjjkwdrxxjnuwevlqtqmh3iegcadc32sio4wmo7bv2gbf34qs34a/0.json'
+          'https://ipfs.io/ipfs/bafybeiclwildrgedknmcldkiy27gxcg4g63n4kgkyqujqjifxdbwa22n2a/0.json'
         )
       })
     })

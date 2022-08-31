@@ -35,7 +35,11 @@ contract GameItems is ERC1155Supply, Ownable {
     uint256 public constant SWORD = 3;
     uint256 public constant SHIELD = 4;
 
-    constructor() ERC1155("https://game.example/api/item/{id}.json") {
+    constructor()
+        ERC1155(
+            "https://ipfs.io/ipfs/bafybeiclwildrgedknmcldkiy27gxcg4g63n4kgkyqujqjifxdbwa22n2a/"
+        )
+    {
         _mint(msg.sender, GOLD, 18, "");
         _mint(msg.sender, SILVER, 27, "");
         _mint(msg.sender, THORS_HAMMER, 1, "");
@@ -54,14 +58,14 @@ contract GameItems is ERC1155Supply, Ownable {
      */
     function uri(uint256 _tokenid)
         public
-        pure
+        view
         override
         returns (string memory)
     {
         return
             string(
                 abi.encodePacked(
-                    "https://ipfs.io/ipfs/bafybeihjjkwdrxxjnuwevlqtqmh3iegcadc32sio4wmo7bv2gbf34qs34a/",
+                    ERC1155.uri(_tokenid),
                     Strings.toString(_tokenid),
                     ".json"
                 )

@@ -39,3 +39,9 @@ npx hardhat verify --network goerli <contract address>
 Deployed contracts on goerli network:
 
 - [0xF6128A92bC60e4244831ad323FAA10E87aACf7d3](https://goerli.etherscan.io/address/0xF6128A92bC60e4244831ad323FAA10E87aACf7d3)
+
+IPFS images
+
+- CID: bafybeiclwildrgedknmcldkiy27gxcg4g63n4kgkyqujqjifxdbwa22n2a
+- IPFS URL: ipfs://bafybeiclwildrgedknmcldkiy27gxcg4g63n4kgkyqujqjifxdbwa22n2a
+- Gateway URL: https://nftstorage.link/ipfs/bafybeiclwildrgedknmcldkiy27gxcg4g63n4kgkyqujqjifxdbwa22n2a
