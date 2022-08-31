@@ -37,7 +37,7 @@ contract GameItems is ERC1155Supply, Ownable {
 
     constructor()
         ERC1155(
-            "https://ipfs.io/ipfs/bafybeiclwildrgedknmcldkiy27gxcg4g63n4kgkyqujqjifxdbwa22n2a/"
+            "https://ipfs.io/ipfs/bafybeiai4s3lls5nyjzj5dr7y66nodvnwq2jogsvp3vbbzqbkhi7mtvfrm/"
         )
     {
         _mint(msg.sender, GOLD, 18, "");
