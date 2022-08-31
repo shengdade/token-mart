@@ -62,12 +62,29 @@ describe('GameItems', function () {
 
   describe('Items', function () {
     describe('URI', function () {
-      it('Should return the right URI', async function () {
+      it('Should return the default URI', async function () {
         const { gameItems } = await loadFixture(deployFixture)
 
         expect(await gameItems.uri('0')).to.equal(
           'https://ipfs.io/ipfs/bafybeiclwildrgedknmcldkiy27gxcg4g63n4kgkyqujqjifxdbwa22n2a/0.json'
         )
+      })
+
+      it('Should allow owner to set the right URI', async function () {
+        const { gameItems } = await loadFixture(deployFixture)
+
+        await gameItems.setURI('https://ipfs.io/ipfs/test/')
+        expect(await gameItems.uri('1')).to.equal(
+          'https://ipfs.io/ipfs/test/1.json'
+        )
+      })
+
+      it('Should revert with the right error if called from another account', async function () {
+        const { gameItems, otherAccount } = await loadFixture(deployFixture)
+
+        await expect(
+          gameItems.connect(otherAccount).setURI('https://ipfs.io/ipfs/test/')
+        ).to.be.revertedWith('Ownable: caller is not the owner')
       })
     })
 

@@ -197,7 +197,7 @@ contract GameItems is ERC1155Supply, Ownable {
     }
 
     /**
-     * Withdraw amount of balance to the owner
+     * Withdraw amount of balance to the owner.
      *
      * Requirements:
      * - only owner can call this function.
@@ -205,6 +205,16 @@ contract GameItems is ERC1155Supply, Ownable {
     function withdraw(uint256 amount) public onlyOwner {
         Address.sendValue(payable(owner()), amount);
         emit Withdrawal(amount);
+    }
+
+    /**
+     * Sets a new URI for all token types.
+     *
+     * Requirements:
+     * - only owner can call this function.
+     */
+    function setURI(string memory newuri) public onlyOwner {
+        _setURI(newuri);
     }
 
     /**
