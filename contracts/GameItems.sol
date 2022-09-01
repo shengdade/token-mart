@@ -29,36 +29,73 @@ contract GameItems is ERC1155Supply, Ownable {
     // Emitted when owner withdrawn amount of balance
     event Withdrawal(uint amount);
 
-    uint256 public constant AXE = 1;
-    uint256 public constant KNIFE = 2;
-    uint256 public constant DART = 3;
-    uint256 public constant MACE = 4;
-    uint256 public constant GUN = 5;
-    uint256 public constant SPEAR = 6;
-    uint256 public constant SWORD = 7;
-    uint256 public constant SLINGSHOT = 8;
-    uint256 public constant SHURIKEN = 9;
-    uint256 public constant BOW = 10;
-    uint256 public constant REGULAR_CAR = 11;
-    uint256 public constant BOAT = 12;
-    uint256 public constant ROCKET = 13;
-    uint256 public constant SUBMARINE = 14;
-    uint256 public constant MINI_CAR = 15;
-    uint256 public constant JET_SKI = 16;
-    uint256 public constant SPORT_CAR = 17;
-    uint256 public constant SUPER_CAR = 18;
-    uint256 public constant CAMEL = 19;
-    uint256 public constant SKATEBOARD = 20;
+    uint256 public constant AXE = 0;
+    uint256 public constant KNIFE = 1;
+    uint256 public constant DART = 2;
+    uint256 public constant MACE = 3;
+    uint256 public constant GUN = 4;
+    uint256 public constant SPEAR = 5;
+    uint256 public constant SWORD = 6;
+    uint256 public constant SLINGSHOT = 7;
+    uint256 public constant SHURIKEN = 8;
+    uint256 public constant BOW = 9;
+    uint256 public constant REGULAR_CAR = 10;
+    uint256 public constant BOAT = 11;
+    uint256 public constant ROCKET = 12;
+    uint256 public constant SUBMARINE = 13;
+    uint256 public constant MINI_CAR = 14;
+    uint256 public constant JET_SKI = 15;
+    uint256 public constant SPORT_CAR = 16;
+    uint256 public constant SUPER_CAR = 17;
+    uint256 public constant CAMEL = 18;
+    uint256 public constant SKATEBOARD = 19;
 
-    /**
-     * Constructor
-     */
     constructor()
         ERC1155(
-            "https://ipfs.io/ipfs/bafybeiai4s3lls5nyjzj5dr7y66nodvnwq2jogsvp3vbbzqbkhi7mtvfrm/"
+            "https://ipfs.io/ipfs/bafybeidr7f2lngryuvsrzf4ctevamqos4pnheyqiltlxb3a6pcugu5esxq/"
         )
     {
-        _mintWithPrice();
+        _mint(msg.sender, AXE, 5, "");
+        _mint(msg.sender, KNIFE, 10, "");
+        _mint(msg.sender, DART, 3, "");
+        _mint(msg.sender, MACE, 3, "");
+        _mint(msg.sender, GUN, 1, "");
+        _mint(msg.sender, SPEAR, 4, "");
+        _mint(msg.sender, SWORD, 10, "");
+        _mint(msg.sender, SLINGSHOT, 20, "");
+        _mint(msg.sender, SHURIKEN, 10, "");
+        _mint(msg.sender, BOW, 15, "");
+        _mint(msg.sender, REGULAR_CAR, 40, "");
+        _mint(msg.sender, BOAT, 8, "");
+        _mint(msg.sender, ROCKET, 3, "");
+        _mint(msg.sender, SUBMARINE, 2, "");
+        _mint(msg.sender, MINI_CAR, 10, "");
+        _mint(msg.sender, JET_SKI, 5, "");
+        _mint(msg.sender, SPORT_CAR, 2, "");
+        _mint(msg.sender, SUPER_CAR, 1, "");
+        _mint(msg.sender, CAMEL, 6, "");
+        _mint(msg.sender, SKATEBOARD, 30, "");
+
+        _setPrice(AXE, 0.01 ether);
+        _setPrice(KNIFE, 0.005 ether);
+        _setPrice(DART, 0.008 ether);
+        _setPrice(MACE, 0.008 ether);
+        _setPrice(GUN, 0.02 ether);
+        _setPrice(SPEAR, 0.005 ether);
+        _setPrice(SWORD, 0.002 ether);
+        _setPrice(SLINGSHOT, 0.004 ether);
+        _setPrice(SHURIKEN, 0.002 ether);
+        _setPrice(BOW, 0.003 ether);
+        _setPrice(REGULAR_CAR, 0.001 ether);
+        _setPrice(BOAT, 0.005 ether);
+        _setPrice(ROCKET, 0.02 ether);
+        _setPrice(SUBMARINE, 0.03 ether);
+        _setPrice(MINI_CAR, 0.01 ether);
+        _setPrice(JET_SKI, 0.008 ether);
+        _setPrice(SPORT_CAR, 0.03 ether);
+        _setPrice(SUPER_CAR, 0.04 ether);
+        _setPrice(CAMEL, 0.01 ether);
+        _setPrice(SKATEBOARD, 0.002 ether);
     }
 
     /**
@@ -230,52 +267,5 @@ contract GameItems is ERC1155Supply, Ownable {
      */
     function _setPrice(uint256 id, uint256 price) private {
         _prices[id] = price;
-    }
-
-    /**
-     * Private function to mint tokens and set prices.
-     */
-    function _mintWithPrice() private {
-        _mint(msg.sender, AXE, 5, "");
-        _mint(msg.sender, KNIFE, 10, "");
-        _mint(msg.sender, DART, 3, "");
-        _mint(msg.sender, MACE, 3, "");
-        _mint(msg.sender, GUN, 1, "");
-        _mint(msg.sender, SPEAR, 4, "");
-        _mint(msg.sender, SWORD, 10, "");
-        _mint(msg.sender, SLINGSHOT, 20, "");
-        _mint(msg.sender, SHURIKEN, 10, "");
-        _mint(msg.sender, BOW, 15, "");
-        _mint(msg.sender, REGULAR_CAR, 40, "");
-        _mint(msg.sender, BOAT, 8, "");
-        _mint(msg.sender, ROCKET, 3, "");
-        _mint(msg.sender, SUBMARINE, 2, "");
-        _mint(msg.sender, MINI_CAR, 10, "");
-        _mint(msg.sender, JET_SKI, 5, "");
-        _mint(msg.sender, SPORT_CAR, 2, "");
-        _mint(msg.sender, SUPER_CAR, 1, "");
-        _mint(msg.sender, CAMEL, 6, "");
-        _mint(msg.sender, SKATEBOARD, 30, "");
-
-        _setPrice(AXE, 0.01 ether);
-        _setPrice(KNIFE, 0.005 ether);
-        _setPrice(DART, 0.008 ether);
-        _setPrice(MACE, 0.008 ether);
-        _setPrice(GUN, 0.02 ether);
-        _setPrice(SPEAR, 0.005 ether);
-        _setPrice(SWORD, 0.002 ether);
-        _setPrice(SLINGSHOT, 0.004 ether);
-        _setPrice(SHURIKEN, 0.002 ether);
-        _setPrice(BOW, 0.003 ether);
-        _setPrice(REGULAR_CAR, 0.001 ether);
-        _setPrice(BOAT, 0.005 ether);
-        _setPrice(ROCKET, 0.02 ether);
-        _setPrice(SUBMARINE, 0.03 ether);
-        _setPrice(MINI_CAR, 0.01 ether);
-        _setPrice(JET_SKI, 0.008 ether);
-        _setPrice(SPORT_CAR, 0.03 ether);
-        _setPrice(SUPER_CAR, 0.04 ether);
-        _setPrice(CAMEL, 0.01 ether);
-        _setPrice(SKATEBOARD, 0.002 ether);
     }
 }
