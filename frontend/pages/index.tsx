@@ -16,8 +16,8 @@ const Home: NextPage = () => {
       <MainLayout>
         <Grid>
           {Array.from(Array(20).keys()).map((i) => (
-            <Grid.Col sm={6} md={4} lg={3} key={i + 1}>
-              <CollectableCard id={i + 1} />
+            <Grid.Col sm={6} md={4} lg={3} key={i}>
+              <CollectableCard id={i} />
             </Grid.Col>
           ))}
         </Grid>

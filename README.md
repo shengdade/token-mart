@@ -46,13 +46,13 @@ IPFS images
 
 - CID: bafybeicetyjsqovk42ylvuqo3zv4e4uhwalp7e5vfkgmuc34cb2vrw5jri
 - IPFS URL: ipfs://bafybeicetyjsqovk42ylvuqo3zv4e4uhwalp7e5vfkgmuc34cb2vrw5jri
-- Gateway URL: https://nftstorage.link/ipfs/bafybeicetyjsqovk42ylvuqo3zv4e4uhwalp7e5vfkgmuc34cb2vrw5jri
+- Gateway URL: [bafybeicetyjsqovk42ylvuqo3zv4e4uhwalp7e5vfkgmuc34cb2vrw5jri](https://nftstorage.link/ipfs/bafybeicetyjsqovk42ylvuqo3zv4e4uhwalp7e5vfkgmuc34cb2vrw5jri)
 
 IPFS metadata
 
 - CID: bafybeidr7f2lngryuvsrzf4ctevamqos4pnheyqiltlxb3a6pcugu5esxq
 - IPFS URL: ipfs://bafybeidr7f2lngryuvsrzf4ctevamqos4pnheyqiltlxb3a6pcugu5esxq
-- Gateway URL: https://nftstorage.link/ipfs/bafybeidr7f2lngryuvsrzf4ctevamqos4pnheyqiltlxb3a6pcugu5esxq
+- Gateway URL: [bafybeidr7f2lngryuvsrzf4ctevamqos4pnheyqiltlxb3a6pcugu5esxq](https://nftstorage.link/ipfs/bafybeidr7f2lngryuvsrzf4ctevamqos4pnheyqiltlxb3a6pcugu5esxq)
 
 ### Legacy
 

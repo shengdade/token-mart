@@ -32,7 +32,7 @@ export default function CartItem({}: CartItemProps) {
         <Card shadow="sm" radius="md">
           <Card.Section>
             <AspectRatio ratio={2800 / 2100}>
-              <Image src="/images/1.png" layout="fill" alt="Image" />
+              <Image src="/images/0.png" layout="fill" alt="Image" />
             </AspectRatio>
           </Card.Section>
         </Card>
