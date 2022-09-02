@@ -11,22 +11,38 @@ import {
   Text,
   Title,
 } from '@mantine/core'
-import type { NextPage } from 'next'
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+import { ParsedUrlQuery } from 'querystring'
+import usePrice from '../../components/hooks/usePrice'
+import useStock from '../../components/hooks/useStock'
+import useTotalSupply from '../../components/hooks/useTotalSupply'
 import CardLayout from '../../components/layout/Card'
 import Label from '../../components/layout/Label'
 import MainLayout from '../../components/layout/Main'
 import Price from '../../components/layout/Price'
 import Stats from '../../components/layout/Stats'
+import { METADATA_CID } from '../../config'
+import { Metadata } from '../../types'
+
+interface CollectableProps {
+  id: string
+  metadata: Metadata
+}
+
+interface Params extends ParsedUrlQuery {
+  id: string
+}
 
 const useStyles = createStyles((theme) => ({}))
 
-const Collectable: NextPage = () => {
-  const router = useRouter()
+const Collectable: NextPage<CollectableProps> = ({ id, metadata }) => {
   const { classes } = useStyles()
-  const { id } = router.query
+  const price = usePrice(id)
+  const totalSupply = useTotalSupply(id)
+  const stock = useStock(id)
+  const { name, description, image } = metadata
 
   return (
     <div>
@@ -44,7 +60,7 @@ const Collectable: NextPage = () => {
                 <Card.Section>
                   <AspectRatio ratio={2800 / 2100}>
                     <Image
-                      src={`/images/${id}.png`}
+                      src={image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
                       layout="fill"
                       alt="Image"
                     />
@@ -52,20 +68,16 @@ const Collectable: NextPage = () => {
                 </Card.Section>
               </Card>
               <CardLayout icon="ic:outline-description" title="Description">
-                <Text>
-                  a weapon with a long metal blade and a hilt with a hand guard,
-                  used for thrusting or striking and now typically worn as part
-                  of ceremonial dress.
-                </Text>
+                <Text>{description}</Text>
               </CardLayout>
             </Stack>
           </Grid.Col>
           <Grid.Col md={7} sm={6} xs={12}>
             <Stack spacing="lg">
-              <Title>Sword</Title>
+              <Title>{name}</Title>
               <Text>Owned by 0x0000000000000000000</Text>
               <Label label="Current Price" size="sm">
-                <Price value={1.01} weight={500} size={40} />
+                <Price value={price} weight={500} size={40} />
               </Label>
               <Group align="flex-end">
                 <NumberInput
@@ -93,10 +105,10 @@ const Collectable: NextPage = () => {
                 />
                 <Stats
                   title="Total Supply"
-                  value="100"
+                  value={totalSupply}
                   icon="ic:outline-inventory-2"
                 />
-                <Stats title="Available" value="12" icon="iconoir:coin" />
+                <Stats title="Available" value={stock} icon="iconoir:coin" />
               </SimpleGrid>
             </Stack>
           </Grid.Col>
@@ -104,6 +116,31 @@ const Collectable: NextPage = () => {
       </MainLayout>
     </div>
   )
+}
+
+export const getStaticPaths: GetStaticPaths<Params> = async () => {
+  return {
+    paths: Array.from(Array(20).keys()).map((id) => ({
+      params: { id: `${id}` },
+    })),
+    fallback: false,
+  }
+}
+
+export const getStaticProps: GetStaticProps<CollectableProps, Params> = async (
+  context
+) => {
+  const { id } = context.params as Params
+  const URL = `https://${METADATA_CID}.ipfs.nftstorage.link/${id}.json`
+  const response = await fetch(URL)
+  const metadata = await response.json()
+
+  return {
+    props: {
+      id,
+      metadata,
+    },
+  }
 }
 
 export default Collectable

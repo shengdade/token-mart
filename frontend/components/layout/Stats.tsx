@@ -4,7 +4,7 @@ import { Card, createStyles, Group, Text } from '@mantine/core'
 interface StatsProps {
   title: string
   icon: string
-  value: string
+  value: string | number
 }
 
 const useStyles = createStyles((theme) => ({

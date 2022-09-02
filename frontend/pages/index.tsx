@@ -1,15 +1,18 @@
 import { Grid } from '@mantine/core'
-import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import CollectableCard from '../components/collectable/CollectableCard'
 import usePrices from '../components/hooks/usePrices'
 import useStocks from '../components/hooks/useStocks'
 import MainLayout from '../components/layout/Main'
 import { METADATA_CID } from '../config'
+import { Metadata } from '../types'
 
-const Home: NextPage = ({
-  metadata,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+interface HomeProps {
+  metadata: Metadata[]
+}
+
+const Home: NextPage<HomeProps> = ({ metadata }) => {
   const prices = usePrices()
   const stocks = useStocks()
 
@@ -40,7 +43,7 @@ const Home: NextPage = ({
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const URLs = Array.from(Array(20).keys()).map(
     (id) => `https://${METADATA_CID}.ipfs.nftstorage.link/${id}.json`
   )
