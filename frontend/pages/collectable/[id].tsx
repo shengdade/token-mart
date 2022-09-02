@@ -1,4 +1,5 @@
 import {
+  Anchor,
   AspectRatio,
   Button,
   Card,
@@ -15,6 +16,7 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { ParsedUrlQuery } from 'querystring'
+import useAddressName from '../../components/hooks/useAddressName'
 import usePrice from '../../components/hooks/usePrice'
 import useStock from '../../components/hooks/useStock'
 import useTotalSupply from '../../components/hooks/useTotalSupply'
@@ -23,7 +25,7 @@ import Label from '../../components/layout/Label'
 import MainLayout from '../../components/layout/Main'
 import Price from '../../components/layout/Price'
 import Stats from '../../components/layout/Stats'
-import { METADATA_CID } from '../../config'
+import { ETHERSCAN_LINK, METADATA_CID, OWNER } from '../../config'
 import { Metadata } from '../../types'
 
 interface CollectableProps {
@@ -42,6 +44,7 @@ const Collectable: NextPage<CollectableProps> = ({ id, metadata }) => {
   const price = usePrice(id)
   const totalSupply = useTotalSupply(id)
   const stock = useStock(id)
+  const addressName = useAddressName(OWNER)
   const { name, description, image } = metadata
 
   return (
@@ -75,7 +78,12 @@ const Collectable: NextPage<CollectableProps> = ({ id, metadata }) => {
           <Grid.Col md={7} sm={6} xs={12}>
             <Stack spacing="lg">
               <Title>{name}</Title>
-              <Text>Owned by 0x0000000000000000000</Text>
+              <Text>
+                {`Owned by `}
+                <Anchor href={`${ETHERSCAN_LINK}${OWNER}`} target="_blank">
+                  {addressName}
+                </Anchor>
+              </Text>
               <Label label="Current Price" size="sm">
                 <Price value={price} weight={500} size={40} />
               </Label>
