@@ -6,11 +6,17 @@ import Price from '../layout/Price'
 
 interface CollectableCardProps {
   id: number
+  price: string | number
+  stock: number
 }
 
 const useStyles = createStyles((theme) => ({}))
 
-export default function CollectableCard({ id }: CollectableCardProps) {
+export default function CollectableCard({
+  id,
+  price,
+  stock,
+}: CollectableCardProps) {
   const { classes } = useStyles()
 
   return (
@@ -28,11 +34,11 @@ export default function CollectableCard({ id }: CollectableCardProps) {
 
         <Group position="apart">
           <Label label="Price">
-            <Price value={1.01} weight={500} size="sm" />
+            <Price value={price} weight={500} size="sm" />
           </Label>
           <Label label="Available">
             <Text weight={500} size="sm">
-              {10}
+              {stock}
             </Text>
           </Label>
         </Group>
