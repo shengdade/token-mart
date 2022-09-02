@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react'
 import {
   Anchor,
   AspectRatio,
@@ -11,6 +12,7 @@ import {
   Stack,
   Text,
   Title,
+  Tooltip,
 } from '@mantine/core'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
@@ -25,7 +27,7 @@ import Label from '../../components/layout/Label'
 import MainLayout from '../../components/layout/Main'
 import Price from '../../components/layout/Price'
 import Stats from '../../components/layout/Stats'
-import { ETHERSCAN_LINK, METADATA_CID, OWNER } from '../../config'
+import { ETHERSCAN_LINK, METADATA_CID, OPENSEA_LINK, OWNER } from '../../config'
 import { Metadata } from '../../types'
 
 interface CollectableProps {
@@ -77,7 +79,14 @@ const Collectable: NextPage<CollectableProps> = ({ id, metadata }) => {
           </Grid.Col>
           <Grid.Col md={7} sm={6} xs={12}>
             <Stack spacing="lg">
-              <Title>{name}</Title>
+              <Group>
+                <Title>{name}</Title>
+                <Tooltip label="View in OpenSea">
+                  <Anchor href={`${OPENSEA_LINK}${id}`} target="_blank">
+                    <Icon icon="simple-icons:opensea" fontSize={24} />
+                  </Anchor>
+                </Tooltip>
+              </Group>
               <Text>
                 {`Owned by `}
                 <Anchor href={`${ETHERSCAN_LINK}${OWNER}`} target="_blank">
