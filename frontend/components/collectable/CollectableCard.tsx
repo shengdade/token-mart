@@ -6,6 +6,8 @@ import Price from '../layout/Price'
 
 interface CollectableCardProps {
   id: number
+  name: string
+  image: string
   price: string | number
   stock: number
 }
@@ -14,6 +16,8 @@ const useStyles = createStyles((theme) => ({}))
 
 export default function CollectableCard({
   id,
+  name,
+  image,
   price,
   stock,
 }: CollectableCardProps) {
@@ -24,12 +28,16 @@ export default function CollectableCard({
       <Card shadow="sm" radius="md" withBorder component="a">
         <Card.Section>
           <AspectRatio ratio={2800 / 2100}>
-            <Image src={`/images/${id}.png`} layout="fill" alt="Image" />
+            <Image
+              src={image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
+              layout="fill"
+              alt="Image"
+            />
           </AspectRatio>
         </Card.Section>
 
         <Text size="sm" weight={500} my="xs">
-          Sword
+          {name}
         </Text>
 
         <Group position="apart">
