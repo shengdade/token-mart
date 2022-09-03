@@ -6,7 +6,7 @@ import { contractConfig } from '../../config'
 export default function usePrice(id: string) {
   const [price, setPrice] = useState<string>('')
 
-  const { data: priceData } = useContractRead({
+  const { data } = useContractRead({
     ...contractConfig,
     functionName: 'priceOf',
     args: id,
@@ -14,10 +14,10 @@ export default function usePrice(id: string) {
   })
 
   useEffect(() => {
-    if (priceData) {
-      setPrice(formatEther(priceData))
+    if (data) {
+      setPrice(formatEther(data))
     }
-  }, [priceData])
+  }, [data])
 
   return price
 }

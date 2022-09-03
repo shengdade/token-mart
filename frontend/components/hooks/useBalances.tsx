@@ -6,7 +6,7 @@ export default function useBalances() {
   const [balances, setBalances] = useState<number[]>()
   const { address } = useAccount()
 
-  const { data: balanceData } = useContractRead({
+  const { data } = useContractRead({
     ...contractConfig,
     functionName: 'balanceOfBatch',
     args: [Array(20).fill(address), ALL_TOKEN_IDS],
@@ -14,10 +14,10 @@ export default function useBalances() {
   })
 
   useEffect(() => {
-    if (balanceData) {
-      setBalances(balanceData.map((balance) => balance.toNumber()))
+    if (data) {
+      setBalances(data.map((balance) => balance.toNumber()))
     }
-  }, [balanceData])
+  }, [data])
 
   return balances
 }

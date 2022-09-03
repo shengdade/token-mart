@@ -5,7 +5,7 @@ import { contractConfig, OWNER } from '../../config'
 export default function useStock(id: string) {
   const [stock, setStock] = useState<number>(0)
 
-  const { data: stockData } = useContractRead({
+  const { data } = useContractRead({
     ...contractConfig,
     functionName: 'balanceOf',
     args: [OWNER, id],
@@ -13,10 +13,10 @@ export default function useStock(id: string) {
   })
 
   useEffect(() => {
-    if (stockData) {
-      setStock(stockData.toNumber())
+    if (data) {
+      setStock(data.toNumber())
     }
-  }, [stockData])
+  }, [data])
 
   return stock
 }

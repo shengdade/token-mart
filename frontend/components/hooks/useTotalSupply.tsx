@@ -5,7 +5,7 @@ import { contractConfig } from '../../config'
 export default function useTotalSupply(id: string) {
   const [totalSupply, setTotalSupply] = useState<number>(0)
 
-  const { data: totalSupplyData } = useContractRead({
+  const { data } = useContractRead({
     ...contractConfig,
     functionName: 'totalSupply',
     args: id,
@@ -13,10 +13,10 @@ export default function useTotalSupply(id: string) {
   })
 
   useEffect(() => {
-    if (totalSupplyData) {
-      setTotalSupply(totalSupplyData.toNumber())
+    if (data) {
+      setTotalSupply(data.toNumber())
     }
-  }, [totalSupplyData])
+  }, [data])
 
   return totalSupply
 }

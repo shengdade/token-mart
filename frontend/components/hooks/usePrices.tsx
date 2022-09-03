@@ -6,7 +6,7 @@ import { ALL_TOKEN_IDS, contractConfig } from '../../config'
 export default function usePrices() {
   const [prices, setPrices] = useState<string[]>()
 
-  const { data: pricesData } = useContractRead({
+  const { data } = useContractRead({
     ...contractConfig,
     functionName: 'priceOfBatch',
     args: [ALL_TOKEN_IDS],
@@ -14,10 +14,10 @@ export default function usePrices() {
   })
 
   useEffect(() => {
-    if (pricesData) {
-      setPrices(pricesData.map((price) => formatEther(price)))
+    if (data) {
+      setPrices(data.map((price) => formatEther(price)))
     }
-  }, [pricesData])
+  }, [data])
 
   return prices
 }
