@@ -19,6 +19,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { ParsedUrlQuery } from 'querystring'
 import useAddressName from '../../components/hooks/useAddressName'
+import useBalance from '../../components/hooks/useBalance'
 import usePrice from '../../components/hooks/usePrice'
 import useStock from '../../components/hooks/useStock'
 import useTotalSupply from '../../components/hooks/useTotalSupply'
@@ -46,6 +47,7 @@ const Collectable: NextPage<CollectableProps> = ({ id, metadata }) => {
   const price = usePrice(id)
   const totalSupply = useTotalSupply(id)
   const stock = useStock(id)
+  const balance = useBalance(id)
   const addressName = useAddressName(OWNER)
   const { name, description, image } = metadata
 
@@ -116,16 +118,16 @@ const Collectable: NextPage<CollectableProps> = ({ id, metadata }) => {
                 ]}
               >
                 <Stats
-                  title="Current Price"
-                  value="13,456"
-                  icon="ri:price-tag-3-line"
-                />
-                <Stats
                   title="Total Supply"
                   value={totalSupply}
                   icon="ic:outline-inventory-2"
                 />
-                <Stats title="Available" value={stock} icon="iconoir:coin" />
+                <Stats
+                  title="Available"
+                  value={stock}
+                  icon="ri:price-tag-line"
+                />
+                <Stats title="Owned" value={balance} icon="bx:wallet-alt" />
               </SimpleGrid>
             </Stack>
           </Grid.Col>
