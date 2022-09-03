@@ -28,8 +28,9 @@ import Label from '../../components/layout/Label'
 import MainLayout from '../../components/layout/Main'
 import Price from '../../components/layout/Price'
 import Stats from '../../components/layout/Stats'
-import { ETHERSCAN_LINK, METADATA_CID, OPENSEA_LINK, OWNER } from '../../config'
+import { ETHERSCAN_LINK, OPENSEA_LINK, OWNER } from '../../config'
 import { Metadata } from '../../types'
+import { getMetadata } from '../../utils'
 
 interface CollectableProps {
   id: string
@@ -150,9 +151,7 @@ export const getStaticProps: GetStaticProps<CollectableProps, Params> = async (
   context
 ) => {
   const { id } = context.params as Params
-  const URL = `https://${METADATA_CID}.ipfs.nftstorage.link/${id}.json`
-  const response = await fetch(URL)
-  const metadata = await response.json()
+  const metadata = await getMetadata(id)
 
   return {
     props: {

@@ -3,7 +3,7 @@ import { useAccount, useContractRead } from 'wagmi'
 import { ALL_TOKEN_IDS, contractConfig } from '../../config'
 
 export default function useBalances() {
-  const [balances, setBalances] = useState<number[]>()
+  const [balances, setBalances] = useState<number[]>(Array(20).fill(0))
   const { address } = useAccount()
 
   const { data } = useContractRead({

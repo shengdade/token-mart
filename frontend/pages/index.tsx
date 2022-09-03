@@ -5,8 +5,8 @@ import CollectableCard from '../components/collectable/CollectableCard'
 import usePrices from '../components/hooks/usePrices'
 import useStocks from '../components/hooks/useStocks'
 import MainLayout from '../components/layout/Main'
-import { METADATA_CID } from '../config'
 import { Metadata } from '../types'
+import { getCollectionMetadata } from '../utils'
 
 interface HomeProps {
   metadata: Metadata[]
@@ -44,14 +44,7 @@ const Home: NextPage<HomeProps> = ({ metadata }) => {
 }
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  const URLs = Array.from(Array(20).keys()).map(
-    (id) => `https://${METADATA_CID}.ipfs.nftstorage.link/${id}.json`
-  )
-  const responses = await Promise.all(URLs.map((url) => fetch(url)))
-
-  const metadata = await Promise.all(
-    responses.map((response) => response.json())
-  )
+  const metadata = await getCollectionMetadata()
 
   return {
     props: {

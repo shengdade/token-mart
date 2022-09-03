@@ -44,6 +44,11 @@ export default function AppHeader() {
         </Link>
         <Group spacing="lg">
           <ColorSchemeToggle />
+          <Link href="/wallet" passHref>
+            <ActionIcon color="dark" component="a">
+              <Icon icon="fluent:wallet-24-filled" fontSize={40} />
+            </ActionIcon>
+          </Link>
           <Link href="/cart" passHref>
             <Indicator label="5" size={16}>
               <ActionIcon color="dark" component="a">
