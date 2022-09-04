@@ -45,13 +45,7 @@ export default function CartItem({}: CartItemProps) {
             </Text>
             <Price value={1.01} />
           </div>
-          <NumberInput
-            label="Quantity"
-            radius="md"
-            defaultValue={1}
-            min={1}
-            max={1000}
-          />
+          <NumberInput label="Quantity" radius="md" defaultValue={1} min={1} />
         </Stack>
       </Grid.Col>
       <Grid.Col span={1} sm={5} />
