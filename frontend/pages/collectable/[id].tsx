@@ -108,6 +108,9 @@ const Collectable: NextPage<CollectableProps> = ({ id, metadata }) => {
                   max={1000}
                 />
                 <Button color="blue" variant="gradient" radius="md">
+                  Buy Now
+                </Button>
+                <Button variant="outline" radius="md">
                   Add to Cart
                 </Button>
               </Group>
