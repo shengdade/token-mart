@@ -4,6 +4,14 @@ export interface Metadata {
   image: string
 }
 
+export interface Item {
+  id: string
+  amount: number
+  name: string
+  image: string
+  price: string
+}
+
 export interface TransactionError extends Error {
   reason: string
   code: string

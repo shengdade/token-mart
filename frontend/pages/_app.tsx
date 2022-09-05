@@ -3,6 +3,7 @@ import {
   ColorSchemeProvider,
   MantineProvider,
 } from '@mantine/core'
+import { NotificationsProvider } from '@mantine/notifications'
 import {
   darkTheme,
   getDefaultWallets,
@@ -67,14 +68,16 @@ export default function App(props: AppProps) {
             colorScheme,
           }}
         >
-          <WagmiConfig client={wagmiClient}>
-            <RainbowKitProvider
-              chains={chains}
-              theme={colorScheme === 'light' ? lightTheme() : darkTheme()}
-            >
-              <Component {...pageProps} />
-            </RainbowKitProvider>
-          </WagmiConfig>
+          <NotificationsProvider>
+            <WagmiConfig client={wagmiClient}>
+              <RainbowKitProvider
+                chains={chains}
+                theme={colorScheme === 'light' ? lightTheme() : darkTheme()}
+              >
+                <Component {...pageProps} />
+              </RainbowKitProvider>
+            </WagmiConfig>
+          </NotificationsProvider>
         </MantineProvider>
       </ColorSchemeProvider>
     </Provider>

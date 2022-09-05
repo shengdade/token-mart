@@ -10,6 +10,8 @@ import {
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import Image from 'next/image'
 import Link from 'next/link'
+import { selectCount } from '../state/cartSlice'
+import { useAppSelector } from '../state/hooks'
 import ColorSchemeToggle from './ColorSchemeToggle'
 
 const HEADER_HEIGHT = 60
@@ -33,6 +35,7 @@ const useStyles = createStyles((theme) => ({
 
 export default function AppHeader() {
   const { classes } = useStyles()
+  const itemCount = useAppSelector(selectCount)
 
   return (
     <Header height={HEADER_HEIGHT} className={classes.root}>
@@ -50,7 +53,7 @@ export default function AppHeader() {
             </ActionIcon>
           </Link>
           <Link href="/cart" passHref>
-            <Indicator label="5" size={16}>
+            <Indicator label={itemCount} size={16}>
               <ActionIcon color="dark" component="a">
                 <Icon icon="ic:round-shopping-cart" fontSize={40} />
               </ActionIcon>

@@ -14,6 +14,7 @@ import {
   Title,
   Tooltip,
 } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
 import { ethers } from 'ethers'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
@@ -35,6 +36,8 @@ import MainLayout from '../../components/layout/Main'
 import Price from '../../components/layout/Price'
 import Stats from '../../components/layout/Stats'
 import { contractConfig, ETHERSCAN, OPENSEA_LINK, OWNER } from '../../config'
+import { addItem } from '../../state/cartSlice'
+import { useAppDispatch } from '../../state/hooks'
 import { Metadata, TransactionError } from '../../types'
 import { getMetadata } from '../../utils'
 
@@ -51,6 +54,7 @@ const useStyles = createStyles((theme) => ({}))
 
 const Collectable: NextPage<CollectableProps> = ({ id, metadata }) => {
   const { classes } = useStyles()
+  const dispatch = useAppDispatch()
   const [amount, setAmount] = useState<number>(1)
   const price = usePrice(id)
   const totalSupply = useTotalSupply(id)
@@ -69,6 +73,16 @@ const Collectable: NextPage<CollectableProps> = ({ id, metadata }) => {
   })
 
   const { data, write, isLoading, isSuccess, error } = useContractWrite(config)
+
+  const onAddToCart = () => {
+    dispatch(addItem({ id, amount, name, image, price }))
+    showNotification({
+      message: 'Item added to cart',
+      icon: <Icon icon="bx:check" fontSize={24} />,
+      color: 'green',
+    })
+    setAmount(1)
+  }
 
   return (
     <div>
@@ -137,7 +151,12 @@ const Collectable: NextPage<CollectableProps> = ({ id, metadata }) => {
                 >
                   Buy Now
                 </Button>
-                <Button variant="outline" radius="md">
+                <Button
+                  variant="outline"
+                  radius="md"
+                  disabled={!write}
+                  onClick={onAddToCart}
+                >
                   Add to Cart
                 </Button>
               </Group>

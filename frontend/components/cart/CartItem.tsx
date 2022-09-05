@@ -9,10 +9,12 @@ import {
   Stack,
   Text,
 } from '@mantine/core'
+import { formatEther, parseEther } from 'ethers/lib/utils'
 import Image from 'next/image'
+import { removeItem, updateAmount } from '../../state/cartSlice'
+import { useAppDispatch } from '../../state/hooks'
+import { Item } from '../../types'
 import Price from '../layout/Price'
-
-interface CartItemProps {}
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -23,8 +25,9 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-export default function CartItem({}: CartItemProps) {
+export default function CartItem({ id, amount, name, image, price }: Item) {
   const { classes } = useStyles()
+  const dispatch = useAppDispatch()
 
   return (
     <Grid className={classes.root} columns={24} p="md">
@@ -32,7 +35,11 @@ export default function CartItem({}: CartItemProps) {
         <Card shadow="sm" radius="md">
           <Card.Section>
             <AspectRatio ratio={2800 / 2100}>
-              <Image src="/images/0.png" layout="fill" alt="Image" />
+              <Image
+                src={image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
+                layout="fill"
+                alt="Image"
+              />
             </AspectRatio>
           </Card.Section>
         </Card>
@@ -41,20 +48,34 @@ export default function CartItem({}: CartItemProps) {
         <Stack justify="space-between">
           <div>
             <Text weight={500} size="lg">
-              Sword
+              {name}
             </Text>
-            <Price value={1.01} />
+            <Price value={price} />
           </div>
-          <NumberInput label="Quantity" radius="md" defaultValue={1} min={1} />
+          <NumberInput
+            label="Quantity"
+            radius="md"
+            value={amount}
+            min={1}
+            onChange={(value) => {
+              if (value) dispatch(updateAmount({ id, amount: value }))
+            }}
+          />
         </Stack>
       </Grid.Col>
       <Grid.Col span={1} sm={5} />
       <Grid.Col span={11} sm={5} className={classes.column}>
         <Stack justify="space-between" align="flex-end" style={{ flexGrow: 1 }}>
-          <Price value={1.01} weight={500} size="xl" px="md" />
+          <Price
+            value={formatEther(parseEther(price).mul(amount))}
+            weight={500}
+            size="xl"
+            px="md"
+          />
           <Button
             leftIcon={<Icon icon="clarity:trash-solid" />}
             variant="subtle"
+            onClick={() => dispatch(removeItem(id))}
           >
             Delete
           </Button>
