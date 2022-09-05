@@ -12,9 +12,11 @@ import {
 import '@rainbow-me/rainbowkit/styles.css'
 import { AppProps } from 'next/app'
 import { useState } from 'react'
+import { Provider } from 'react-redux'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
+import store from '../state/store'
 
 const { chains, provider } = configureChains(
   [
@@ -53,26 +55,28 @@ export default function App(props: AppProps) {
   }
 
   return (
-    <ColorSchemeProvider
-      colorScheme={colorScheme}
-      toggleColorScheme={toggleColorScheme}
-    >
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          colorScheme,
-        }}
+    <Provider store={store}>
+      <ColorSchemeProvider
+        colorScheme={colorScheme}
+        toggleColorScheme={toggleColorScheme}
       >
-        <WagmiConfig client={wagmiClient}>
-          <RainbowKitProvider
-            chains={chains}
-            theme={colorScheme === 'light' ? lightTheme() : darkTheme()}
-          >
-            <Component {...pageProps} />
-          </RainbowKitProvider>
-        </WagmiConfig>
-      </MantineProvider>
-    </ColorSchemeProvider>
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{
+            colorScheme,
+          }}
+        >
+          <WagmiConfig client={wagmiClient}>
+            <RainbowKitProvider
+              chains={chains}
+              theme={colorScheme === 'light' ? lightTheme() : darkTheme()}
+            >
+              <Component {...pageProps} />
+            </RainbowKitProvider>
+          </WagmiConfig>
+        </MantineProvider>
+      </ColorSchemeProvider>
+    </Provider>
   )
 }
