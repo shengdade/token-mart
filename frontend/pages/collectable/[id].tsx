@@ -142,7 +142,6 @@ const Collectable: NextPage<CollectableProps> = ({ id, metadata }) => {
                   min={1}
                 />
                 <Button
-                  color="blue"
                   variant="gradient"
                   radius="md"
                   disabled={!write}
