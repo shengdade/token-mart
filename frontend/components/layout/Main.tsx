@@ -1,17 +1,17 @@
-import { AppShell, Container } from '@mantine/core'
-import { useAccount } from 'wagmi'
+import { AppShell, Container, Loader } from '@mantine/core'
 import AppHeader from '../AppHeader'
 import ChainSwitch from '../ChainSwitch'
 import Warning from '../feedback/Warning'
 import useChain from '../hooks/useChain'
+import useConnect from '../hooks/useConnect'
 
 export default function MainLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const { isConnected } = useAccount()
   const { isGoerli } = useChain()
+  const { connected, connecting } = useConnect()
 
   return (
     <AppShell
@@ -27,12 +27,14 @@ export default function MainLayout({
       })}
     >
       <Container size="lg">
-        {isConnected ? (
+        {connected ? (
           isGoerli ? (
             <>{children}</>
           ) : (
             <ChainSwitch />
           )
+        ) : connecting ? (
+          <Loader size="lg" />
         ) : (
           <Warning>Please connect your wallet.</Warning>
         )}
