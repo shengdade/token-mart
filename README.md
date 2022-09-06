@@ -36,6 +36,12 @@ npx hardhat verify --network goerli <contract address>
 
 ## Deployment
 
+### Frontend
+
+[https://www.neead.com/](https://www.neead.com/)
+
+Deploy to AWS Amplify console, and set environment variable `NEXT_PUBLIC_ALCHEMY_ID` from `.env` file
+
 ### Goerli network
 
 Deployed contracts:
