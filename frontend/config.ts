@@ -16,6 +16,8 @@ export const ALL_TOKEN_IDS = Array.from(Array(20).keys())
 
 export const ALL_TOKEN_OWNERS = Array(20).fill(OWNER)
 
+export const GOERLI_NETWORK_ID = 5
+
 export const ETHERSCAN = 'https://goerli.etherscan.io'
 
 export const OPENSEA_LINK = `https://testnets.opensea.io/assets/goerli/${CONTRACT}/`

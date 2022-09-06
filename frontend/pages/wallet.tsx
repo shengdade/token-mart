@@ -30,7 +30,7 @@ const Wallet: NextPage<WalletProps> = ({ metadata }) => {
         <meta name="description" content="Game Items Wallet" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      å
+
       <MainLayout>
         <Grid>
           <Grid.Col xs={12} sm={6}>

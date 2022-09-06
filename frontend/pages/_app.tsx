@@ -17,6 +17,7 @@ import { Provider } from 'react-redux'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
+import { GOERLI_NETWORK_ID } from '../config'
 import store from '../state/store'
 
 const { chains, provider } = configureChains(
@@ -72,6 +73,7 @@ export default function App(props: AppProps) {
             <WagmiConfig client={wagmiClient}>
               <RainbowKitProvider
                 chains={chains}
+                initialChain={GOERLI_NETWORK_ID}
                 theme={colorScheme === 'light' ? lightTheme() : darkTheme()}
               >
                 <Component {...pageProps} />
