@@ -1,6 +1,7 @@
 import {
   ColorScheme,
   ColorSchemeProvider,
+  Loader,
   MantineProvider,
 } from '@mantine/core'
 import { NotificationsProvider } from '@mantine/notifications'
@@ -14,11 +15,12 @@ import '@rainbow-me/rainbowkit/styles.css'
 import { AppProps } from 'next/app'
 import { useState } from 'react'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 import { GOERLI_NETWORK_ID } from '../config'
-import store from '../state/store'
+import { persistor, store } from '../state/store'
 
 const { chains, provider } = configureChains(
   [
@@ -58,30 +60,32 @@ export default function App(props: AppProps) {
 
   return (
     <Provider store={store}>
-      <ColorSchemeProvider
-        colorScheme={colorScheme}
-        toggleColorScheme={toggleColorScheme}
-      >
-        <MantineProvider
-          withGlobalStyles
-          withNormalizeCSS
-          theme={{
-            colorScheme,
-          }}
+      <PersistGate loading={<Loader variant="bars" />} persistor={persistor}>
+        <ColorSchemeProvider
+          colorScheme={colorScheme}
+          toggleColorScheme={toggleColorScheme}
         >
-          <NotificationsProvider>
-            <WagmiConfig client={wagmiClient}>
-              <RainbowKitProvider
-                chains={chains}
-                initialChain={GOERLI_NETWORK_ID}
-                theme={colorScheme === 'light' ? lightTheme() : darkTheme()}
-              >
-                <Component {...pageProps} />
-              </RainbowKitProvider>
-            </WagmiConfig>
-          </NotificationsProvider>
-        </MantineProvider>
-      </ColorSchemeProvider>
+          <MantineProvider
+            withGlobalStyles
+            withNormalizeCSS
+            theme={{
+              colorScheme,
+            }}
+          >
+            <NotificationsProvider>
+              <WagmiConfig client={wagmiClient}>
+                <RainbowKitProvider
+                  chains={chains}
+                  initialChain={GOERLI_NETWORK_ID}
+                  theme={colorScheme === 'light' ? lightTheme() : darkTheme()}
+                >
+                  <Component {...pageProps} />
+                </RainbowKitProvider>
+              </WagmiConfig>
+            </NotificationsProvider>
+          </MantineProvider>
+        </ColorSchemeProvider>
+      </PersistGate>
     </Provider>
   )
 }
